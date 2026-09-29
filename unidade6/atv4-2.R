@@ -19,15 +19,27 @@ modelo <- lm(produtividade ~ treinamento +
 
 summary(modelo)
 
+# teste shapiro
+
+shapiro.test(dados$experiencia)
+shapiro.test(dados$faltas)
+shapiro.test(dados$produtividade)
+
+
 #c
 coef(modelo)
 
 #d
 # todas menos "faltas"
 
+# trocar modelo
+
+modelo2 <- step(modeloStep)
+summary(modelo)
+
 #e
-# Multiple R-squared:  0.9995,	Adjusted R-squared:  0.9993 
-# F-statistic:  4246 on 3 and 6 DF,  p-value: 2.282e-10
+# Multiple R-squared:  0.9994,	Adjusted R-squared:  0.9993 
+# F-statistic:  6205 on 2 and 7 DF,  p-value: 4.255e-12
 
 #f
 
