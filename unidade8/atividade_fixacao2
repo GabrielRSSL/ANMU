@@ -1,0 +1,39 @@
+dados <- data.frame(
+  Ensino = factor(c(
+    rep("Presencial",10),
+    rep("Hibrido",10),
+    rep("EAD",10))),
+  Matematica = c(
+    82,85,88,79,90,84,87,91,86,83,
+    75,78,80,77,79,81,76,74,82,78,
+    68,70,72,66,71,69,73,67,65,74),
+  Estatistica = c(
+    80,83,85,78,88,82,84,89,85,81,
+    72,75,77,74,76,78,73,71,79,75,
+    64,66,68,63,67,65,69,62,61,70),
+  Programacao = c(
+    85,88,90,84,92,87,89,93,91,86,
+    78,80,82,79,81,83,77,76,84,80,
+    70,72,74,69,73,71,75,68,67,76))
+
+View(dados)
+
+matcor <- cor(dados[, c("Matematica", "Estatistica", "Programacao")])
+matcor
+
+shapiro.test(dados$Matematica) #normal
+shapiro.test(dados$Estatistica) #normal
+shapiro.test(dados$Programacao) #normal
+
+modelo <- manova(cbind(Matematica, Estatistica, Programacao) ~ Ensino, data=dados)
+
+summary(modelo, test="Roy")   #Teste Roy
+summary(modelo, test="Wilks")  #Teste lambda de Wilks
+summary(modelo)  #Teste Pillai
+# Rejeita-se H0, as médias são diferentes
+
+summary.aov(modelo)
+
+aggregate(cbind(Matematica, Estatistica, Programacao) ~ Ensino,
+          data = dados,
+          FUN = mean)
